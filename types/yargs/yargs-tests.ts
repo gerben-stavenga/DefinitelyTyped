@@ -1366,7 +1366,10 @@ function Argv$optionsOfTwoCommandsCollide() {
         ["bar"],
         "bar command",
         (yargs) => yargs.option("b", { type: "number", required: true }),
-        (argv) => { const a: string = argv.a; const b: number = argv.b; }).parseSync();
+        (argv) => {
+            const a: string = argv.a;  // $ExpectError
+            const b: number = argv.b; 
+        }).parseSync();
 }
 
 function Argv$commandsWithAsynchronousBuilders() {
