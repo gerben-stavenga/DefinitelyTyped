@@ -1355,6 +1355,20 @@ async function Argv$defaultCommandWithPositional(): Promise<string> {
     return (await argv).arg;
 }
 
+function Argv$optionsOfTwoCommandsCollide() {
+    return yargs
+    .command(
+        ["foo"],
+        "foo command",
+        (yargs) => yargs.option("a", { type: "string", required: true }),
+        (argv) => { const a: string = argv.a; })
+    .command(
+        ["bar"],
+        "bar command",
+        (yargs) => yargs.option("b", { type: "number", required: true }),
+        (argv) => { const a: string = argv.a; const b: number = argv.b; }).parseSync();
+}
+
 function Argv$commandsWithAsynchronousBuilders() {
     const argv1 = yargs.command(
         "command <arg>",
